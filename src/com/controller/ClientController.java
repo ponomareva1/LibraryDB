@@ -10,7 +10,7 @@ import javafx.scene.control.TableView;
 
 public class ClientController implements ControlledScreen {
 
-    ScreensController myController;
+    private ScreensController myController;
 
     @FXML
     private TableView<Client> tableClients;

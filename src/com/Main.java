@@ -11,18 +11,19 @@ public class Main extends Application {
 
     static Stage primaryStage;
 
-    public static String screen1ID = "mainScreen";
-    public static String screen1File = "/com/view/mainScreen.fxml";
-    //public static String screen2ID = "editMenu";
-    //public static String screen2File = "/com/view/clientEditDialog.fxml";
+    public static String screen1ID = "menu";
+    private static String screen1File = "/com/view/menu.fxml";
+    public static String screen2ID = "clients";
+    private static String screen2File = "/com/view/clientsScreen.fxml";
+
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
         ScreensController mainContainer = new ScreensController();
         mainContainer.loadScreen(screen1ID, screen1File);
-        //mainContainer.loadScreen(screen2ID, screen2File);
+        mainContainer.loadScreen(screen2ID, screen2File);
 
         mainContainer.setScreen(screen1ID);
 
