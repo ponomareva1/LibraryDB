@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ClientController implements ControlledScreen {
 
@@ -78,11 +79,12 @@ public class ClientController implements ControlledScreen {
     }
 
     public void addClient(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Insert new client?", ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Insert new client?");
 
-        if (alert.getResult() == ButtonType.YES){
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.YES){
             try {
                 ClientDAO.insertClient(firstNameAddField.getText(),lastNameAddField.getText(),
                         passportSeriaAddField.getText(),passportNumAddField.getText());
