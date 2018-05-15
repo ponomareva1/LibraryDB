@@ -9,7 +9,7 @@ import com.controller.ScreensController;
 
 public class Main extends Application {
 
-    static Stage primaryStage;
+    private static Stage primaryStage;
 
     public static String screen1ID = "menu";
     private static String screen1File = "/com/view/menu.fxml";
@@ -19,13 +19,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        Main.primaryStage = primaryStage;
 
         ScreensController mainContainer = new ScreensController();
         mainContainer.loadScreen(screen1ID, screen1File);
         mainContainer.loadScreen(screen2ID, screen2File);
 
-        mainContainer.setScreen(screen1ID);
+        mainContainer.setScreen(screen2ID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
