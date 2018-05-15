@@ -33,19 +33,14 @@ public class ClientController implements ControlledScreen {
 
     @FXML
     private TableView<Client> tableClients;
-
     @FXML
     private TableColumn<Client, Integer> idColumn;
-
     @FXML
     private TableColumn<Client, String> firstNameColumn;
-
     @FXML
     private TableColumn<Client, String> lastNameColumn;
-
     @FXML
     private TableColumn<Client, String> passportSeriaColumn;
-
     @FXML
     private TableColumn<Client, String> passportNumColumn;
 
@@ -79,21 +74,21 @@ public class ClientController implements ControlledScreen {
     }
 
     public void addClient(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Insert new client?");
+        if (!checkFields()){
+            return;
+        }
 
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get() == ButtonType.YES){
+        if (checkAction("Insert new client?")){
             try {
                 ClientDAO.insertClient(firstNameAddField.getText(),lastNameAddField.getText(),
                         passportSeriaAddField.getText(),passportNumAddField.getText());
+
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                initData();
             }
         }
-
-        initData();
     }
 
     public void updateSelected(ActionEvent actionEvent) {
@@ -102,5 +97,41 @@ public class ClientController implements ControlledScreen {
 
     public void deleteSelected(ActionEvent actionEvent) {
 
+    }
+
+    private boolean checkAction(String question){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(question);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return (result.get() == ButtonType.OK);
+    }
+
+    private boolean checkFields(){
+        if (firstNameAddField.getText().isEmpty() || lastNameAddField.getText().isEmpty() ||
+        passportSeriaAddField.getText().isEmpty() || passportNumAddField.getText().isEmpty()){
+            showWarning("All fields must contain data");
+            return false;
+        }
+
+        if (passportSeriaAddField.getText().length() != 4){
+            showWarning("Passport Seria must contain 4 digits");
+            return false;
+        }
+
+        if (passportNumAddField.getText().length() != 6){
+            showWarning("Passport Number must contain 6 digits");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showWarning(String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Error");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
