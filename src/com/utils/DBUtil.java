@@ -13,7 +13,7 @@ public class DBUtil {
 
     private static Connection connection;
 
-    public static void dbConnect() {
+    private static void dbConnect() {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -26,11 +26,12 @@ public class DBUtil {
         }
     }
 
+    // ??
     public static Connection getConnection() {
         return connection;
     }
 
-    public static void dbDisconnect() {
+    private static void dbDisconnect() {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
@@ -41,6 +42,7 @@ public class DBUtil {
         }
     }
 
+    // for Select
     public static ResultSet dbExecuteQuery(String queryStmt) throws SQLException {
         Statement stmt = null;
         ResultSet resultSet = null;
@@ -68,6 +70,7 @@ public class DBUtil {
         return crs;
     }
 
+    // for Update/Insert/Delete
     public static void dbExecuteUpdate(String sqlStmt) throws SQLException {
         Statement stmt = null;
         try {

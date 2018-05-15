@@ -6,10 +6,9 @@ import com.utils.ControlledScreen;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
+import java.sql.SQLException;
 
 public class ClientController implements ControlledScreen {
 
@@ -19,15 +18,17 @@ public class ClientController implements ControlledScreen {
     private Button updateSelectedButton;
     @FXML
     private Button deleteSelectedButton;
+    @FXML
+    private Button backToMenuButton;
 
     @FXML
-    private TextField passportNumAddField;
-    @FXML
-    private TextField passportSeriaAddField;
+    private TextField firstNameAddField;
     @FXML
     private TextField lastNameAddField;
     @FXML
-    private TextField firstNameAddField;
+    private TextField passportSeriaAddField;
+    @FXML
+    private TextField passportNumAddField;
 
     @FXML
     private TableView<Client> tableClients;
@@ -49,13 +50,19 @@ public class ClientController implements ControlledScreen {
 
     @FXML
     private void initialize() {
+        backToMenuButton.setOnAction(e -> myController.setScreen("menu"));
+
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         passportSeriaColumn.setCellValueFactory(cellData -> cellData.getValue().passportSeriaProperty());
         passportNumColumn.setCellValueFactory(cellData -> cellData.getValue().passportNumProperty());
 
-        // init data
+        initData();
+    }
+
+    private void initData() {
+        tableClients.getItems().clear();
         ObservableList<Client> clientsData = ClientDAO.searchClients();
         tableClients.setItems(clientsData);
     }
@@ -71,7 +78,20 @@ public class ClientController implements ControlledScreen {
     }
 
     public void addClient(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Insert new client?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
 
+        if (alert.getResult() == ButtonType.YES){
+            try {
+                ClientDAO.insertClient(firstNameAddField.getText(),lastNameAddField.getText(),
+                        passportSeriaAddField.getText(),passportNumAddField.getText());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        initData();
     }
 
     public void updateSelected(ActionEvent actionEvent) {
@@ -79,10 +99,6 @@ public class ClientController implements ControlledScreen {
     }
 
     public void deleteSelected(ActionEvent actionEvent) {
-
-    }
-
-    public void goBackToMenu(ActionEvent actionEvent) {
 
     }
 }
