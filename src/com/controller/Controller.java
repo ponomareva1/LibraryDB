@@ -1,21 +1,20 @@
-package sample;
+package com.controller;
 
+import com.model.Client;
+import com.utils.ControlledScreen;
+import com.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.model.Client;
 
 import java.sql.*;
 
-public class Controller {
+public class Controller implements ControlledScreen {
 
-    private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
-    private static final String DB_CONNECTION = "jdbc:oracle:thin:@//localhost:1521/mydb.oracle";
-    private static final String DB_USER = "helen";
-    private static final String DB_PASSWORD = "oracle";
+    ScreensController myController;
 
     private ObservableList<Client> clientsData = FXCollections.observableArrayList();
 
@@ -38,25 +37,11 @@ public class Controller {
         tableClients.setItems(clientsData);
     }
 
-    private static Connection getDBConnection() {
-        Connection dbConnection = null;
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-            return dbConnection;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return dbConnection;
-    }
-
 
     private void initData() {
-        Connection con = getDBConnection();
+        DBConnection.dbConnect();
+
+        Connection con = DBConnection.getConnection();
         try {
             Statement st = con.createStatement();
             String query = "select FIRST_NAME, LAST_NAME from CLIENTS";
@@ -67,9 +52,14 @@ public class Controller {
                 clientsData.add(new Client(firstName, lastName));
             }
             st.close();
-            con.close();
+            DBConnection.dbDisconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setScreenParent(ScreensController screenPage) {
+        myController = screenPage;
     }
 }
