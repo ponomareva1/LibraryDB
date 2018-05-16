@@ -23,13 +23,13 @@ public class ClientController implements ControlledScreen {
     private Button backToMenuButton;
 
     @FXML
-    private TextField firstNameAddField;
+    private TextField firstNameField;
     @FXML
-    private TextField lastNameAddField;
+    private TextField lastNameField;
     @FXML
-    private TextField passportSeriaAddField;
+    private TextField passportSeriaField;
     @FXML
-    private TextField passportNumAddField;
+    private TextField passportNumField;
 
     @FXML
     private TableView<Client> tableClients;
@@ -54,13 +54,7 @@ public class ClientController implements ControlledScreen {
         passportSeriaColumn.setCellValueFactory(cellData -> cellData.getValue().passportSeriaProperty());
         passportNumColumn.setCellValueFactory(cellData -> cellData.getValue().passportNumProperty());
 
-        initData();
-    }
-
-    private void initData() {
-        tableClients.getItems().clear();
-        ObservableList<Client> clientsData = ClientDAO.searchClients();
-        tableClients.setItems(clientsData);
+        updateTable();
     }
 
     @Override
@@ -68,35 +62,75 @@ public class ClientController implements ControlledScreen {
         myController = screenPage;
     }
 
+    private void updateTable() {
+        tableClients.getItems().clear();
+        ObservableList<Client> clientsData = ClientDAO.searchClients();
+        tableClients.setItems(clientsData);
+    }
+
     public void userClickedOnTable() {
-        this.updateSelectedButton.setDisable(false);
-        this.deleteSelectedButton.setDisable(false);
+        if (updateSelectedButton.isDisabled()) this.updateSelectedButton.setDisable(false);
+        if (deleteSelectedButton.isDisabled()) this.deleteSelectedButton.setDisable(false);
+
+        setSelectedClient();
+    }
+
+    private void setSelectedClient(){
+        Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
+        firstNameField.setText(selectedClient.getFirstName());
+        lastNameField.setText(selectedClient.getLastName());
+        passportSeriaField.setText(selectedClient.getPassportSeria());
+        passportNumField.setText(selectedClient.getPassportNum());
     }
 
     public void addClient(ActionEvent actionEvent) {
-        if (!checkFields()){
-            return;
-        }
+        if (!checkFields()) return;
 
         if (checkAction("Insert new client?")){
             try {
-                ClientDAO.insertClient(firstNameAddField.getText(),lastNameAddField.getText(),
-                        passportSeriaAddField.getText(),passportNumAddField.getText());
+                ClientDAO.insertClient(firstNameField.getText(), lastNameField.getText(),
+                        passportSeriaField.getText(), passportNumField.getText());
 
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                initData();
+                updateTable();
             }
         }
     }
 
     public void updateSelected(ActionEvent actionEvent) {
+        if (!checkFields()) return;
 
+        Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
+        String selectedId = selectedClient.getId().toString();
+
+        if (checkAction("Update client with id = " + selectedId + "?")){
+            try {
+                ClientDAO.updateClient(selectedId, firstNameField.getText(), lastNameField.getText(),
+                        passportSeriaField.getText(), passportNumField.getText());
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                updateTable();
+            }
+        }
     }
 
     public void deleteSelected(ActionEvent actionEvent) {
+        Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
+        String selectedId = selectedClient.getId().toString();
+        if (checkAction("Delete client with id = " + selectedId + "?")){
+            try {
+                ClientDAO.deleteClient(selectedId);
 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                updateTable();
+            }
+        }
     }
 
     private boolean checkAction(String question){
@@ -109,19 +143,27 @@ public class ClientController implements ControlledScreen {
     }
 
     private boolean checkFields(){
-        if (firstNameAddField.getText().isEmpty() || lastNameAddField.getText().isEmpty() ||
-        passportSeriaAddField.getText().isEmpty() || passportNumAddField.getText().isEmpty()){
+        if (firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty() ||
+        passportSeriaField.getText().isEmpty() || passportNumField.getText().isEmpty()){
             showWarning("All fields must contain data");
             return false;
         }
 
-        if (passportSeriaAddField.getText().length() != 4){
+        if (passportSeriaField.getText().length() != 4){
             showWarning("Passport Seria must contain 4 digits");
             return false;
         }
 
-        if (passportNumAddField.getText().length() != 6){
+        if (passportNumField.getText().length() != 6){
             showWarning("Passport Number must contain 6 digits");
+            return false;
+        }
+
+        try{
+            Integer.parseInt(passportNumField.getText());
+            Integer.parseInt(passportSeriaField.getText());
+        } catch (NumberFormatException e){
+            showWarning("Passport Fields must contain a number");
             return false;
         }
 
@@ -133,5 +175,12 @@ public class ClientController implements ControlledScreen {
         alert.setHeaderText("Error");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void clearFields(ActionEvent actionEvent) {
+        firstNameField.clear();
+        lastNameField.clear();
+        passportSeriaField.clear();
+        passportNumField.clear();
     }
 }

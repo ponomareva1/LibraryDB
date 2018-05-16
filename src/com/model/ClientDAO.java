@@ -44,6 +44,9 @@ public class ClientDAO {
                         "VALUES" +
                         "('"+first_name+"','"+last_name+"','"+passport_seria+"','"+passport_num+"')";
 
+
+        System.out.println("Client inserted");
+
         try {
             DBUtil.dbExecuteUpdate(insertStmt);
         } catch (SQLException e) {
@@ -52,17 +55,17 @@ public class ClientDAO {
         }
     }
 
-    public static void updateClient(String empId, String empEmail) throws SQLException {
-        //Declare a UPDATE statement
-        String updateStmt =
-                "BEGIN\n" +
-                        "   UPDATE employees\n" +
-                        "      SET EMAIL = '" + empEmail + "'\n" +
-                        "    WHERE EMPLOYEE_ID = " + empId + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+    public static void updateClient(String id, String first_name, String last_name,
+                                    String passport_seria, String passport_num) throws SQLException {
+        String updateStmt = "UPDATE CLIENTS " +
+                "SET FIRST_NAME = '"+first_name+"', "+
+                "LAST_NAME = '"+last_name+"', "+
+                "PASSPORT_SERIA = '"+passport_seria+"', "+
+                "PASSPORT_NUM = '"+passport_num+"' "+
+                "WHERE ID = "+id+"";
 
-        //Execute UPDATE operation
+        System.out.println("Client updated");
+
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
@@ -71,18 +74,14 @@ public class ClientDAO {
         }
     }
 
-    public static void deleteClient(String empId) throws SQLException {
-        //Declare a DELETE statement
-        String updateStmt =
-                "BEGIN\n" +
-                        "   DELETE FROM employees\n" +
-                        "         WHERE employee_id ="+ empId +";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+    public static void deleteClient(String id) throws SQLException {
+        String deleteStmt = "DELETE FROM CLIENTS " +
+                        "WHERE ID = "+ id;
 
-        //Execute UPDATE operation
+        System.out.println("Client deleted");
+
         try {
-            DBUtil.dbExecuteUpdate(updateStmt);
+            DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;

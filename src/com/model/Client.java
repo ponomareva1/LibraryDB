@@ -20,7 +20,7 @@ public class Client {
         this.passportNum = new SimpleStringProperty();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id.get();
     }
 
