@@ -12,11 +12,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <columns>
-            <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
-            <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
-            <TableColumn fx:id="passportSeriaColumn" prefWidth="75.0" text="Passport Seria" />
-            <TableColumn fx:id="passportNumColumn" prefWidth="75.0" text="Passport Num" />
+            <TableColumn fx:id="idColumn" prefWidth="34.0" resizable="false" text="ID" />
+            <TableColumn fx:id="firstNameColumn" prefWidth="146.0" resizable="false" text="First Name" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="150.0" resizable="false" text="Last Name" />
+            <TableColumn fx:id="passportSeriaColumn" prefWidth="121.0" resizable="false" text="Passport Seria" />
+            <TableColumn fx:id="passportNumColumn" prefWidth="125.0" resizable="false" text="Passport Num" />
          </columns>
       </TableView>
       <GridPane alignment="TOP_CENTER" prefHeight="147.0" prefWidth="600.0" AnchorPane.bottomAnchor="453.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
