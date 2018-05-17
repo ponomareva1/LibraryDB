@@ -24,11 +24,11 @@ public class Client {
         return id.get();
     }
 
-    public void setId(int clientId){
+    public void setId(int clientId) {
         this.id.set(clientId);
     }
 
-    public IntegerProperty idProperty(){
+    public IntegerProperty idProperty() {
         return id;
     }
 
@@ -36,11 +36,11 @@ public class Client {
         return firstName.get();
     }
 
-    public void setFirstName(String clientFirstName){
+    public void setFirstName(String clientFirstName) {
         this.firstName.set(clientFirstName);
     }
 
-    public StringProperty firstNameProperty(){
+    public StringProperty firstNameProperty() {
         return firstName;
     }
 
@@ -48,11 +48,11 @@ public class Client {
         return lastName.get();
     }
 
-    public void setLastName(String clientLastName){
+    public void setLastName(String clientLastName) {
         this.lastName.set(clientLastName);
     }
 
-    public StringProperty lastNameProperty(){
+    public StringProperty lastNameProperty() {
         return lastName;
     }
 
@@ -60,11 +60,11 @@ public class Client {
         return passportSeria.get();
     }
 
-    public void setPassportSeria(String clientPassportSeria){
+    public void setPassportSeria(String clientPassportSeria) {
         this.passportSeria.set(clientPassportSeria);
     }
 
-    public StringProperty passportSeriaProperty(){
+    public StringProperty passportSeriaProperty() {
         return passportSeria;
     }
 
@@ -72,11 +72,11 @@ public class Client {
         return passportNum.get();
     }
 
-    public void setPassportNum(String clientPassportNum){
+    public void setPassportNum(String clientPassportNum) {
         this.passportNum.set(clientPassportNum);
     }
 
-    public StringProperty passportNumProperty(){
+    public StringProperty passportNumProperty() {
         return passportNum;
     }
 }

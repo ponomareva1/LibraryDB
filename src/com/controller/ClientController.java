@@ -3,6 +3,7 @@ package com.controller;
 import com.model.Client;
 import com.model.ClientDAO;
 import com.utils.ControlledScreen;
+import com.utils.ScreensController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,34 +16,21 @@ public class ClientController implements ControlledScreen {
 
     private ScreensController myController;
 
-    @FXML
-    private Button updateSelectedButton;
-    @FXML
-    private Button deleteSelectedButton;
-    @FXML
-    private Button backToMenuButton;
+    public Button updateSelectedButton;
+    public Button deleteSelectedButton;
+    public Button backToMenuButton;
 
-    @FXML
-    private TextField firstNameField;
-    @FXML
-    private TextField lastNameField;
-    @FXML
-    private TextField passportSeriaField;
-    @FXML
-    private TextField passportNumField;
+    public TextField firstNameField;
+    public TextField lastNameField;
+    public TextField passportSeriaField;
+    public TextField passportNumField;
 
-    @FXML
-    private TableView<Client> tableClients;
-    @FXML
-    private TableColumn<Client, Integer> idColumn;
-    @FXML
-    private TableColumn<Client, String> firstNameColumn;
-    @FXML
-    private TableColumn<Client, String> lastNameColumn;
-    @FXML
-    private TableColumn<Client, String> passportSeriaColumn;
-    @FXML
-    private TableColumn<Client, String> passportNumColumn;
+    public TableView<Client> tableClients;
+    public TableColumn<Client, Integer> idColumn;
+    public TableColumn<Client, String> firstNameColumn;
+    public TableColumn<Client, String> lastNameColumn;
+    public TableColumn<Client, String> passportSeriaColumn;
+    public TableColumn<Client, String> passportNumColumn;
 
     @FXML
     private void initialize() {

@@ -10,7 +10,7 @@
          <children>
             <Button fx:id="journalButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Journal" />
             <Button fx:id="clientsButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Clients" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Others" />
+            <Button fx:id="booksButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Books" />
          </children></VBox>
    </children>
 </AnchorPane>

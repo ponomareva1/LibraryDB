@@ -5,7 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import com.controller.ScreensController;
+import com.utils.ScreensController;
 
 public class Main extends Application {
 
@@ -15,6 +15,8 @@ public class Main extends Application {
     private static String screen1File = "/com/view/menu.fxml";
     public static String screen2ID = "clients";
     private static String screen2File = "/com/view/clientsScreen.fxml";
+    public static String screen3ID = "books";
+    private static String screen3File = "/com/view/booksScreen.fxml";
 
 
     @Override
@@ -24,8 +26,9 @@ public class Main extends Application {
         ScreensController mainContainer = new ScreensController();
         mainContainer.loadScreen(screen1ID, screen1File);
         mainContainer.loadScreen(screen2ID, screen2File);
+        mainContainer.loadScreen(screen3ID, screen3File);
 
-        mainContainer.setScreen(screen2ID);
+        mainContainer.setScreen(screen3ID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
