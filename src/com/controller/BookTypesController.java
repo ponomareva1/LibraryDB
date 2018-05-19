@@ -83,11 +83,10 @@ public class BookTypesController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 updateTable();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
-
-        this.updateSelectedButton.setDisable(true);
-        this.deleteSelectedButton.setDisable(true);
     }
 
     public void updateSelected(ActionEvent actionEvent) {
@@ -105,11 +104,10 @@ public class BookTypesController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 updateTable();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
-
-        this.updateSelectedButton.setDisable(true);
-        this.deleteSelectedButton.setDisable(true);
     }
 
     public void deleteSelected(ActionEvent actionEvent) {
@@ -124,11 +122,10 @@ public class BookTypesController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 updateTable();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
-
-        this.updateSelectedButton.setDisable(true);
-        this.deleteSelectedButton.setDisable(true);
     }
 
     private boolean checkFields(){

@@ -91,6 +91,8 @@ public class BooksController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 update();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
     }
@@ -112,6 +114,8 @@ public class BooksController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 update();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
     }
@@ -128,6 +132,8 @@ public class BooksController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 update();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
     }

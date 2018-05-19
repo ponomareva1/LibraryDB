@@ -11,8 +11,10 @@ public class Main extends Application {
 
     private static Stage primaryStage;
 
-    public static String screen1ID = "menu";
-    private static String screen1File = "/com/view/menu.fxml";
+    public static String screen0ID = "menu";
+    private static String screen0File = "/com/view/menu.fxml";
+    public static String screen1ID = "journal";
+    private static String screen1File = "/com/view/journalScreen.fxml";
     public static String screen2ID = "clients";
     private static String screen2File = "/com/view/clientsScreen.fxml";
     public static String screen3ID = "books";
@@ -26,12 +28,13 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
 
         ScreensController mainContainer = new ScreensController();
+        mainContainer.loadScreen(screen0ID, screen0File);
         mainContainer.loadScreen(screen1ID, screen1File);
         mainContainer.loadScreen(screen2ID, screen2File);
         mainContainer.loadScreen(screen3ID, screen3File);
         mainContainer.loadScreen(screen4ID, screen4File);
 
-        mainContainer.setScreen(screen4ID);
+        mainContainer.setScreen(screen1ID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);

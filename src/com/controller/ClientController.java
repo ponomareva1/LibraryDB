@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class ClientController implements ControlledScreen {
 
@@ -84,6 +83,8 @@ public class ClientController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 updateTable();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
     }
@@ -103,6 +104,8 @@ public class ClientController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 updateTable();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
     }
@@ -118,6 +121,8 @@ public class ClientController implements ControlledScreen {
                 e.printStackTrace();
             } finally {
                 updateTable();
+                this.updateSelectedButton.setDisable(true);
+                this.deleteSelectedButton.setDisable(true);
             }
         }
     }
