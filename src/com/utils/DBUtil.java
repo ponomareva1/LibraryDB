@@ -82,4 +82,25 @@ public class DBUtil {
             dbDisconnect();
         }
     }
+
+    // function with 1 integer parameter
+    public static Integer dbExecuteFUN1(String sqlStmt, Integer param) throws SQLException {
+        CallableStatement cs = null;
+        try {
+            dbConnect();
+            cs = connection.prepareCall(sqlStmt);
+            cs.registerOutParameter(1,Types.NUMERIC);
+            cs.setInt(2, param);
+            cs.executeUpdate();
+            return cs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("Problem occurred at dbExecuteFUN1 operation : " + e);
+            throw e;
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            dbDisconnect();
+        }
+    }
 }
