@@ -20,41 +20,23 @@ public class Book {
         this.type = new SimpleIntegerProperty();
     }
 
-    public Integer getId() {
-        return id.get();
-    }
+    public Integer getId() { return id.get(); }
 
-    public void setId(int clientId){
-        this.id.set(clientId);
-    }
+    public void setId(int clientId){ this.id.set(clientId); }
 
-    public IntegerProperty idProperty(){
-        return id;
-    }
+    public IntegerProperty idProperty(){ return id; }
 
-    public String getTitle() {
-        return title.get();
-    }
+    public String getTitle() { return title.get(); }
 
-    public void setTitle(String bookTitle){
-        this.title.set(bookTitle);
-    }
+    public void setTitle(String bookTitle){ this.title.set(bookTitle); }
 
-    public StringProperty titleProperty(){
-        return title;
-    }
+    public StringProperty titleProperty(){ return title; }
 
-    public String getAuthor() {
-        return author.get();
-    }
+    public String getAuthor() { return author.get(); }
 
-    public void setAuthor(String bookAuthor){
-        this.author.set(bookAuthor);
-    }
+    public void setAuthor(String bookAuthor){ this.author.set(bookAuthor); }
 
-    public StringProperty authorProperty(){
-        return author;
-    }
+    public StringProperty authorProperty(){ return author; }
 
     public Integer getCount() {
         return count.get();

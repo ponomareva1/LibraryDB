@@ -62,7 +62,6 @@ public class BookDAO {
                         "VALUES" +
                         "('"+name+"','"+author+"','"+count+"','"+type+"')";
 
-
         System.out.println("Book inserted");
 
         try {

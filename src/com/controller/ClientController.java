@@ -3,6 +3,7 @@ package com.controller;
 import com.model.Client;
 import com.model.ClientDAO;
 import com.utils.ControlledScreen;
+import com.utils.DialogUtil;
 import com.utils.ScreensController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,7 +75,7 @@ public class ClientController implements ControlledScreen {
     public void addClient(ActionEvent actionEvent) {
         if (!checkFields()) return;
 
-        if (checkAction("Insert new client?")){
+        if (DialogUtil.checkAction("Insert new client?")){
             try {
                 ClientDAO.insertClient(firstNameField.getText(), lastNameField.getText(),
                         passportSeriaField.getText(), passportNumField.getText());
@@ -93,7 +94,7 @@ public class ClientController implements ControlledScreen {
         Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
         String selectedId = selectedClient.getId().toString();
 
-        if (checkAction("Update client with id = " + selectedId + "?")){
+        if (DialogUtil.checkAction("Update client with id = " + selectedId + "?")){
             try {
                 ClientDAO.updateClient(selectedId, firstNameField.getText(), lastNameField.getText(),
                         passportSeriaField.getText(), passportNumField.getText());
@@ -109,7 +110,7 @@ public class ClientController implements ControlledScreen {
     public void deleteSelected(ActionEvent actionEvent) {
         Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
         String selectedId = selectedClient.getId().toString();
-        if (checkAction("Delete client with id = " + selectedId + "?")){
+        if (DialogUtil.checkAction("Delete client with id = " + selectedId + "?")){
             try {
                 ClientDAO.deleteClient(selectedId);
 
@@ -121,29 +122,20 @@ public class ClientController implements ControlledScreen {
         }
     }
 
-    private boolean checkAction(String question){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(question);
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return (result.get() == ButtonType.OK);
-    }
-
     private boolean checkFields(){
         if (firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty() ||
         passportSeriaField.getText().isEmpty() || passportNumField.getText().isEmpty()){
-            showWarning("All fields must contain data");
+            DialogUtil.showWarning("All fields must contain data");
             return false;
         }
 
         if (passportSeriaField.getText().length() != 4){
-            showWarning("Passport Seria must contain 4 digits");
+            DialogUtil.showWarning("Passport Seria must contain 4 digits");
             return false;
         }
 
         if (passportNumField.getText().length() != 6){
-            showWarning("Passport Number must contain 6 digits");
+            DialogUtil.showWarning("Passport Number must contain 6 digits");
             return false;
         }
 
@@ -151,18 +143,11 @@ public class ClientController implements ControlledScreen {
             Integer.parseInt(passportNumField.getText());
             Integer.parseInt(passportSeriaField.getText());
         } catch (NumberFormatException e){
-            showWarning("Passport Fields must contain a number");
+            DialogUtil.showWarning("Passport Fields must contain a number");
             return false;
         }
 
         return true;
-    }
-
-    private void showWarning(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText("Error");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     public void clearFields(ActionEvent actionEvent) {

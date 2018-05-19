@@ -17,6 +17,8 @@ public class Main extends Application {
     private static String screen2File = "/com/view/clientsScreen.fxml";
     public static String screen3ID = "books";
     private static String screen3File = "/com/view/booksScreen.fxml";
+    public static String screen4ID = "bookTypes";
+    private static String screen4File = "/com/view/bookTypesScreen.fxml";
 
 
     @Override
@@ -27,8 +29,9 @@ public class Main extends Application {
         mainContainer.loadScreen(screen1ID, screen1File);
         mainContainer.loadScreen(screen2ID, screen2File);
         mainContainer.loadScreen(screen3ID, screen3File);
+        mainContainer.loadScreen(screen4ID, screen4File);
 
-        mainContainer.setScreen(screen3ID);
+        mainContainer.setScreen(screen4ID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);

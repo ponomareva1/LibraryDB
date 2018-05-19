@@ -26,11 +26,6 @@ public class DBUtil {
         }
     }
 
-    // ??
-    public static Connection getConnection() {
-        return connection;
-    }
-
     private static void dbDisconnect() {
         try {
             if (connection != null && !connection.isClosed()) {
@@ -46,7 +41,7 @@ public class DBUtil {
     public static ResultSet dbExecuteQuery(String queryStmt) throws SQLException {
         Statement stmt = null;
         ResultSet resultSet = null;
-        CachedRowSetImpl crs = null;
+        CachedRowSetImpl crs;
         try {
             dbConnect();
 
