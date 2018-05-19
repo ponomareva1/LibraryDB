@@ -31,9 +31,15 @@ public class JournalDAO {
             journal.setId(rs.getInt("ID"));
             journal.setBookId(rs.getInt("BOOK_ID"));
             journal.setClientId(rs.getInt("CLIENT_ID"));
-            journal.setDateBeg(convertTimestampToString(rs.getTimestamp("DATE_BEG")));
-            journal.setDateEnd(convertTimestampToString(rs.getTimestamp("DATE_END")));
-            journal.setDateRet(convertTimestampToString(rs.getTimestamp("DATE_RET")));
+            journal.setDateBeg(rs.getTimestamp("DATE_BEG").toString());
+            journal.setDateEnd(rs.getTimestamp("DATE_END").toString());
+
+            try {
+                journal.setDateRet(convertTimestampToString(rs.getTimestamp("DATE_RET")));
+            } catch (NullPointerException e){
+                journal.setDateRet("NULL");
+            }
+
 
             journalList.add(journal);
         }

@@ -25,6 +25,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // to work with TIMESTAMP
+        System.getProperties().setProperty("oracle.jdbc.J2EE13Compliant", "true");
+
         Main.primaryStage = primaryStage;
 
         ScreensController mainContainer = new ScreensController();
