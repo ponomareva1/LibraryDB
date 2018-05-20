@@ -91,6 +91,10 @@ public class BookTypesController implements ControlledScreen {
     public void updateSelected(ActionEvent actionEvent) {
         if (!checkFields()) return;
 
+        if (tableBookTypes.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Row");
+            return;
+        }
         BookType selectedBookType = tableBookTypes.getSelectionModel().getSelectedItem();
         String selectedId = selectedBookType.getId().toString();
 
@@ -109,6 +113,10 @@ public class BookTypesController implements ControlledScreen {
     }
 
     public void deleteSelected(ActionEvent actionEvent) {
+        if (tableBookTypes.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Row");
+            return;
+        }
         BookType selectedBookType = tableBookTypes.getSelectionModel().getSelectedItem();
         String selectedId = selectedBookType.getId().toString();
 
@@ -147,5 +155,6 @@ public class BookTypesController implements ControlledScreen {
         nameField.clear();
         fineField.clear();
         dayCountField.clear();
+        updateTable();
     }
 }

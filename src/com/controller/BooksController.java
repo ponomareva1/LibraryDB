@@ -33,8 +33,6 @@ public class BooksController implements ControlledScreen {
     public TableColumn<Book, Integer> countColumn;
     public TableColumn<Book, Integer> typeColumn;
 
-    ObservableList<String> bookTypes;
-
     @Override
     public void setScreenParent(ScreensController screenPage) {
         myController = screenPage;
@@ -57,8 +55,7 @@ public class BooksController implements ControlledScreen {
         ObservableList<Book> clientsData = BookDAO.searchBooks();
         tableBooks.setItems(clientsData);
 
-        bookTypes = BookDAO.searchBookTypes();
-        typeBox.setItems(bookTypes);
+        typeBox.setItems(BookDAO.searchBookTypes());
     }
 
     public void userClickedOnTable() {
@@ -99,6 +96,10 @@ public class BooksController implements ControlledScreen {
     public void updateSelected(ActionEvent actionEvent) {
         if (!checkFields()) return;
 
+        if (tableBooks.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Row");
+            return;
+        }
         Book selectedBook = tableBooks.getSelectionModel().getSelectedItem();
         String selectedId = selectedBook.getId().toString();
 
@@ -119,6 +120,10 @@ public class BooksController implements ControlledScreen {
     }
 
     public void deleteSelected(ActionEvent actionEvent) {
+        if (tableBooks.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Row");
+            return;
+        }
         Book selectedBook = tableBooks.getSelectionModel().getSelectedItem();
         String selectedId = selectedBook.getId().toString();
 
@@ -157,5 +162,6 @@ public class BooksController implements ControlledScreen {
         authorField.clear();
         countField.clear();
         typeBox.getSelectionModel().clearSelection();
+        update();
     }
 }

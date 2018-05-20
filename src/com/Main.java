@@ -37,7 +37,7 @@ public class Main extends Application {
         mainContainer.loadScreen(screen3ID, screen3File);
         mainContainer.loadScreen(screen4ID, screen4File);
 
-        mainContainer.setScreen(screen1ID);
+        mainContainer.setScreen(screen0ID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);

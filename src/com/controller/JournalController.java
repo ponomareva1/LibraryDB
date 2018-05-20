@@ -91,11 +91,11 @@ public class JournalController implements ControlledScreen {
         Integer clientID = Integer.parseInt(clientIdBox.getSelectionModel().getSelectedItem().toString());
         Integer bookId = Integer.parseInt(bookIdBox.getSelectionModel().getSelectedItem().toString());
 
-        if (DialogUtil.checkAction("Hand out book with ID = " + bookId.toString() +
+        if (DialogUtil.checkAction("Issue book with ID = " + bookId.toString() +
                 " to client with ID = " + clientID.toString() + "?")){
             try {
                 JournalDAO.callAddNewRecord(clientID, bookId);
-                DialogUtil.showInformation("Book is handed out for client!");
+                DialogUtil.showInformation("The book is issued to the client!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -105,9 +105,18 @@ public class JournalController implements ControlledScreen {
     }
 
     public void returnBook(ActionEvent event) {
+        if (tableJournal.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Journal Row");
+            return;
+        }
         Journal selectedRow = tableJournal.getSelectionModel().getSelectedItem();
         Integer clientID = selectedRow.getClientId();
         Integer bookId = selectedRow.getBookId();
+
+        if (selectedRow.getDateRet() != "NULL"){
+            DialogUtil.showWarning("Date of Return must be NULL");
+            return;
+        }
 
         if (DialogUtil.checkAction("Return book with ID = " + bookId.toString() +
                 " from client with ID = " + clientID.toString() + "?")){

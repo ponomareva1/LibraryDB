@@ -91,6 +91,10 @@ public class ClientController implements ControlledScreen {
     public void updateSelected(ActionEvent actionEvent) {
         if (!checkFields()) return;
 
+        if (tableClients.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Row");
+            return;
+        }
         Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
         String selectedId = selectedClient.getId().toString();
 
@@ -109,6 +113,10 @@ public class ClientController implements ControlledScreen {
     }
 
     public void deleteSelected(ActionEvent actionEvent) {
+        if (tableClients.getSelectionModel().isEmpty()){
+            DialogUtil.showWarning("Select Row");
+            return;
+        }
         Client selectedClient = tableClients.getSelectionModel().getSelectedItem();
         String selectedId = selectedClient.getId().toString();
         if (DialogUtil.checkAction("Delete client with id = " + selectedId + "?")){
@@ -157,5 +165,6 @@ public class ClientController implements ControlledScreen {
         lastNameField.clear();
         passportSeriaField.clear();
         passportNumField.clear();
+        updateTable();
     }
 }
