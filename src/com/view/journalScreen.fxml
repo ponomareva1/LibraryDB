@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.JournalController">
     <children>
-        <TableView fx:id="tableClients" layoutX="-26.0" layoutY="154.0" prefHeight="446.0" prefWidth="600.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="154.0">
+        <TableView fx:id="tableJournal" layoutX="-26.0" layoutY="154.0" prefHeight="446.0" prefWidth="600.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="154.0">
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
@@ -72,7 +72,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="Reset" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="Reset" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
@@ -83,6 +83,16 @@
                </GridPane.margin>
             </Button>
             <Button fx:id="returnBookButton" mnemonicParsing="false" onAction="#returnBook" prefHeight="200.0" prefWidth="200.0" text="Return Book" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="maxFineButton" mnemonicParsing="false" onAction="#showMaxFine" prefHeight="200.0" prefWidth="200.0" text="Max Fine" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="popularBooksButton" mnemonicParsing="false" onAction="#showPopularBooks" prefHeight="200.0" prefWidth="200.0" text="Most popular books" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>

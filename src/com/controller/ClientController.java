@@ -80,7 +80,6 @@ public class ClientController implements ControlledScreen {
                         passportSeriaField.getText(), passportNumField.getText());
                 DialogUtil.showInformation("New Client inserted!");
             } catch (SQLException e) {
-                e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);
@@ -101,7 +100,6 @@ public class ClientController implements ControlledScreen {
                         passportSeriaField.getText(), passportNumField.getText());
                 DialogUtil.showInformation("Selected Client updated!");
             } catch (SQLException e) {
-                //e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);
@@ -118,7 +116,6 @@ public class ClientController implements ControlledScreen {
                 ClientDAO.deleteClient(selectedId);
                 DialogUtil.showInformation("Selected Client deleted!");
             } catch (SQLException e) {
-                e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);

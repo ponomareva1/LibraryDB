@@ -3,6 +3,7 @@ package com.utils;
 import com.sun.rowset.CachedRowSetImpl;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBUtil {
 
@@ -83,6 +84,26 @@ public class DBUtil {
         }
     }
 
+    // function with 0 parameters
+    public static Integer dbExecuteFUN0(String sqlStmt) throws SQLException {
+        CallableStatement cs = null;
+        try {
+            dbConnect();
+            cs = connection.prepareCall(sqlStmt);
+            cs.registerOutParameter(1,Types.NUMERIC);
+            cs.executeUpdate();
+            return cs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("Problem occurred at dbExecuteFUN0 operation : " + e);
+            throw e;
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            dbDisconnect();
+        }
+    }
+
     // function with 1 integer parameter
     public static Integer dbExecuteFUN1(String sqlStmt, Integer param) throws SQLException {
         CallableStatement cs = null;
@@ -95,6 +116,53 @@ public class DBUtil {
             return cs.getInt(1);
         } catch (SQLException e) {
             System.out.println("Problem occurred at dbExecuteFUN1 operation : " + e);
+            throw e;
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            dbDisconnect();
+        }
+    }
+
+    // procedure with 2 integer in parameters
+    public static void dbExecutePROC2IN(String sqlStmt, Integer param1, Integer param2) throws SQLException {
+        CallableStatement cs = null;
+        try {
+            dbConnect();
+            cs = connection.prepareCall(sqlStmt);
+            cs.setInt(1, param1);
+            cs.setInt(2, param2);
+            cs.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred at dbExecutePROC2IN operation : " + e);
+            throw e;
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            dbDisconnect();
+        }
+    }
+
+    // procedure with 3 sting out parameters
+    public static ArrayList<String> dbExecutePROC3OUT(String sqlStmt) throws SQLException {
+        CallableStatement cs = null;
+        try {
+            dbConnect();
+            cs = connection.prepareCall(sqlStmt);
+            cs.registerOutParameter(1,Types.VARCHAR);
+            cs.registerOutParameter(2,Types.VARCHAR);
+            cs.registerOutParameter(3,Types.VARCHAR);
+            cs.executeUpdate();
+
+            ArrayList<String> out = new ArrayList<>();
+            out.add(cs.getString(1));
+            out.add(cs.getString(2));
+            out.add(cs.getString(3));
+            return out;
+        } catch (SQLException e) {
+            System.out.println("Problem occurred at dbExecutePROC3OUT operation : " + e);
             throw e;
         } finally {
             if (cs != null) {

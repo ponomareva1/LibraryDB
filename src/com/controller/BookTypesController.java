@@ -80,7 +80,6 @@ public class BookTypesController implements ControlledScreen {
                         dayCountField.getText());
                 DialogUtil.showInformation("New Book Type inserted!");
             } catch (SQLException e) {
-                e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);
@@ -101,7 +100,6 @@ public class BookTypesController implements ControlledScreen {
                         dayCountField.getText());
                 DialogUtil.showInformation("Selected Book Type updated!");
             } catch (SQLException e) {
-                e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);
@@ -119,7 +117,6 @@ public class BookTypesController implements ControlledScreen {
                 BookTypeDAO.deleteBookType(selectedId);
                 DialogUtil.showInformation("Selected Book Type deleted!");
             } catch (SQLException e) {
-                e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);

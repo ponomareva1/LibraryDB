@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class JournalDAO {
 
@@ -30,14 +31,14 @@ public class JournalDAO {
     }
 
     public static ObservableList<Integer> searchBookIDs () {
-        String selectStmt = "SELECT DISTINCT BOOK_ID FROM JOURNAL ORDER BY BOOK_ID";
+        String selectStmt = "SELECT DISTINCT ID FROM BOOKS WHERE CNT != 0 ORDER BY ID";
         ObservableList<Integer> bookIDs = FXCollections.observableArrayList();
 
         try {
             ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
 
             while (rs.next()) {
-                bookIDs.add(rs.getInt("BOOK_ID"));
+                bookIDs.add(rs.getInt("ID"));
             }
         } catch (SQLException e) {
             DialogUtil.showError(e.getMessage());
@@ -70,7 +71,34 @@ public class JournalDAO {
         return fineAmount.toString();
     }
 
+    public static String getMaxFine(){
+        String callStmt = "{? = call MAX_FINE()}";
+        Integer fineAmount = 0;
 
+        try {
+            fineAmount = DBUtil.dbExecuteFUN0(callStmt);
+        } catch (SQLException e) {
+            DialogUtil.showError(e.getMessage());
+        }
+        return "Current max fine: " + fineAmount.toString();
+    }
+
+    public static String get3PopularBooks(){
+        String callStmt = "{call POPULAR_BOOKS_3(?,?,?)}";
+        ArrayList<String> books = new ArrayList<>();
+        try {
+            books = DBUtil.dbExecutePROC3OUT(callStmt);
+        } catch (SQLException e) {
+            DialogUtil.showError(e.getMessage());
+        }
+
+        String msg = "3 most popular books:\n\n";
+        msg += books.get(0) + '\n';
+        msg += books.get(1) + '\n';
+        msg += books.get(2);
+
+        return msg;
+    }
 
     public static ObservableList<Journal> searchJournal () {
         String selectStmt = "SELECT * FROM JOURNAL";
@@ -126,5 +154,25 @@ public class JournalDAO {
         return dateFormat.format(timestamp);
     }
 
+    public static void callReturnBook(Integer clientID, Integer bookID) throws SQLException {
+        String procStmt = "{call RETURN_BOOK(?,?)}";
 
+        try {
+            DBUtil.dbExecutePROC2IN(procStmt, clientID, bookID);
+        } catch (SQLException e) {
+            DialogUtil.showError(e.getMessage());
+            throw e;
+        }
+    }
+
+    public static void callAddNewRecord(Integer clientID, Integer bookID) throws SQLException {
+        String procStmt = "{call ADD_NEW_JOURNAL_RECORD(?,?)}";
+
+        try {
+            DBUtil.dbExecutePROC2IN(procStmt, clientID, bookID);
+        } catch (SQLException e) {
+            DialogUtil.showError(e.getMessage());
+            throw e;
+        }
+    }
 }

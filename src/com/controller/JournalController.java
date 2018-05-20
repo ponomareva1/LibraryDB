@@ -10,9 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.SQLException;
+
 public class JournalController implements ControlledScreen {
 
-    public TableView<Journal> tableClients;
+    public TableView<Journal> tableJournal;
     public TableColumn<Journal, Integer> idColumn;
     public TableColumn<Journal, Integer> bookIdColumn;
     public TableColumn<Journal, Integer> clientIdColumn;
@@ -52,10 +54,10 @@ public class JournalController implements ControlledScreen {
     }
 
     private void updateTable() {
-        tableClients.getItems().clear();
+        tableJournal.getItems().clear();
         ObservableList<Journal> data = JournalDAO.searchJournal();
-        tableClients.setItems(data);
-        tableClients.getSortOrder().add(idColumn);
+        tableJournal.setItems(data);
+        tableJournal.getSortOrder().add(idColumn);
 
         clientIdBox.setItems(JournalDAO.searchClientIDs());
         clientIdBox.getSelectionModel().clearSelection();
@@ -72,10 +74,10 @@ public class JournalController implements ControlledScreen {
             return;
         }
         Integer clientID = Integer.parseInt(clientIdBox.getSelectionModel().getSelectedItem().toString());
-        tableClients.getItems().clear();
+        tableJournal.getItems().clear();
         ObservableList<Journal> data = JournalDAO.searchJournalForClient(clientID);
-        tableClients.setItems(data);
-        tableClients.getSortOrder().add(idColumn);
+        tableJournal.setItems(data);
+        tableJournal.getSortOrder().add(idColumn);
 
         numOfBooksField.setText(JournalDAO.getNumOfBooks(clientID));
         currentFineField.setText(JournalDAO.getClientFine(clientID));
@@ -86,9 +88,45 @@ public class JournalController implements ControlledScreen {
             DialogUtil.showWarning("Select client ID and book ID");
             return;
         }
+        Integer clientID = Integer.parseInt(clientIdBox.getSelectionModel().getSelectedItem().toString());
+        Integer bookId = Integer.parseInt(bookIdBox.getSelectionModel().getSelectedItem().toString());
+
+        if (DialogUtil.checkAction("Hand out book with ID = " + bookId.toString() +
+                " to client with ID = " + clientID.toString() + "?")){
+            try {
+                JournalDAO.callAddNewRecord(clientID, bookId);
+                DialogUtil.showInformation("Book is handed out for client!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                updateTable();
+            }
+        }
     }
 
     public void returnBook(ActionEvent event) {
+        Journal selectedRow = tableJournal.getSelectionModel().getSelectedItem();
+        Integer clientID = selectedRow.getClientId();
+        Integer bookId = selectedRow.getBookId();
 
+        if (DialogUtil.checkAction("Return book with ID = " + bookId.toString() +
+                " from client with ID = " + clientID.toString() + "?")){
+            try {
+                JournalDAO.callReturnBook(clientID, bookId);
+                DialogUtil.showInformation("Book returned!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                updateTable();
+            }
+        }
+    }
+
+    public void showMaxFine(ActionEvent actionEvent) {
+        DialogUtil.showInformation(JournalDAO.getMaxFine());
+    }
+
+    public void showPopularBooks(ActionEvent actionEvent) {
+        DialogUtil.showInformation(JournalDAO.get3PopularBooks());
     }
 }
