@@ -78,7 +78,7 @@ public class BookTypesController implements ControlledScreen {
             try {
                 BookTypeDAO.insertBookType(nameField.getText(), fineField.getText(),
                         dayCountField.getText());
-
+                DialogUtil.showInformation("New Book Type inserted!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -99,7 +99,7 @@ public class BookTypesController implements ControlledScreen {
             try {
                 BookTypeDAO.updateBookType(selectedId, nameField.getText(), fineField.getText(),
                         dayCountField.getText());
-
+                DialogUtil.showInformation("Selected Book Type updated!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -117,7 +117,7 @@ public class BookTypesController implements ControlledScreen {
         if (DialogUtil.checkAction("Delete book type with id = " + selectedId + "?")){
             try {
                 BookTypeDAO.deleteBookType(selectedId);
-
+                DialogUtil.showInformation("Selected Book Type deleted!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {

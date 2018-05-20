@@ -1,6 +1,7 @@
 package com.model;
 
 import com.utils.DBUtil;
+import com.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,7 +21,7 @@ public class BookDAO {
                 bookTypes.add(rs.getString("NAME"));
             }
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
 
         return bookTypes;
@@ -34,7 +35,7 @@ public class BookDAO {
 
             return getBooksList(rs);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return null;
     }
@@ -62,12 +63,10 @@ public class BookDAO {
                         "VALUES" +
                         "('"+name+"','"+author+"','"+count+"','"+type+"')";
 
-        System.out.println("Book inserted");
-
         try {
             DBUtil.dbExecuteUpdate(insertStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while INSERT Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }
@@ -80,12 +79,10 @@ public class BookDAO {
                 "TYPE_ID = '"+type+"' "+
                 "WHERE ID = "+id+"";
 
-        System.out.println("Book updated");
-
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while UPDATE Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }
@@ -94,12 +91,10 @@ public class BookDAO {
         String deleteStmt = "DELETE FROM BOOKS " +
                 "WHERE ID = "+ id;
 
-        System.out.println("Book deleted");
-
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while DELETE Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }

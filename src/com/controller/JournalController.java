@@ -86,7 +86,6 @@ public class JournalController implements ControlledScreen {
             DialogUtil.showWarning("Select client ID and book ID");
             return;
         }
-
     }
 
     public void returnBook(ActionEvent event) {

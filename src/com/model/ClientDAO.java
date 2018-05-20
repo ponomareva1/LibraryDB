@@ -1,6 +1,7 @@
 package com.model;
 
 import com.utils.DBUtil;
+import com.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +17,7 @@ public class ClientDAO {
 
             return getClientsList(rs);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return null;
     }
@@ -45,12 +46,10 @@ public class ClientDAO {
                         "('"+first_name+"','"+last_name+"','"+passport_seria+"','"+passport_num+"')";
 
 
-        System.out.println("Client inserted");
-
         try {
             DBUtil.dbExecuteUpdate(insertStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while INSERT Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }
@@ -64,12 +63,10 @@ public class ClientDAO {
                 "PASSPORT_NUM = '"+passport_num+"' "+
                 "WHERE ID = "+id+"";
 
-        System.out.println("Client updated");
-
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while UPDATE Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }
@@ -78,12 +75,10 @@ public class ClientDAO {
         String deleteStmt = "DELETE FROM CLIENTS " +
                         "WHERE ID = "+ id;
 
-        System.out.println("Client deleted");
-
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while DELETE Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }

@@ -1,6 +1,7 @@
 package com.model;
 
 import com.utils.DBUtil;
+import com.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -22,7 +23,7 @@ public class JournalDAO {
                 clientIDs.add(rs.getInt("CLIENT_ID"));
             }
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
 
         return clientIDs;
@@ -39,7 +40,7 @@ public class JournalDAO {
                 bookIDs.add(rs.getInt("BOOK_ID"));
             }
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
 
         return bookIDs;
@@ -52,7 +53,7 @@ public class JournalDAO {
         try {
             numOfBooks = DBUtil.dbExecuteFUN1(callStmt, clientID);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return numOfBooks.toString();
     }
@@ -64,7 +65,7 @@ public class JournalDAO {
         try {
             fineAmount = DBUtil.dbExecuteFUN1(callStmt, clientID);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return fineAmount.toString();
     }
@@ -79,7 +80,7 @@ public class JournalDAO {
 
             return getJournalList(rs);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return null;
     }
@@ -92,7 +93,7 @@ public class JournalDAO {
 
             return getJournalList(rs);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return null;
     }
@@ -124,4 +125,6 @@ public class JournalDAO {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return dateFormat.format(timestamp);
     }
+
+
 }

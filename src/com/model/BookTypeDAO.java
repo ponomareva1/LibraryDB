@@ -1,6 +1,7 @@
 package com.model;
 
 import com.utils.DBUtil;
+import com.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +17,7 @@ public class BookTypeDAO {
 
             return getBookTypesList(rs);
         } catch (SQLException e) {
-            System.out.println("SQL select operation has been failed: " + e);
+            DialogUtil.showError(e.getMessage());
         }
         return null;
     }
@@ -43,12 +44,10 @@ public class BookTypeDAO {
                         "VALUES" +
                         "('"+name+"','"+fine+"','"+dayCount+"')";
 
-        System.out.println("BookType inserted");
-
         try {
             DBUtil.dbExecuteUpdate(insertStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while INSERT Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }
@@ -60,12 +59,10 @@ public class BookTypeDAO {
                 "DAY_COUNT = '"+dayCount+"' "+
                 "WHERE ID = "+id+"";
 
-        System.out.println("BookType updated");
-
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while UPDATE Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }
@@ -74,12 +71,10 @@ public class BookTypeDAO {
         String deleteStmt = "DELETE FROM BOOK_TYPES " +
                 "WHERE ID = "+ id;
 
-        System.out.println("BookType deleted");
-
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException e) {
-            System.out.print("Error occurred while DELETE Operation: " + e);
+            DialogUtil.showError(e.getMessage());
             throw e;
         }
     }

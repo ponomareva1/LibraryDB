@@ -78,7 +78,7 @@ public class ClientController implements ControlledScreen {
             try {
                 ClientDAO.insertClient(firstNameField.getText(), lastNameField.getText(),
                         passportSeriaField.getText(), passportNumField.getText());
-
+                DialogUtil.showInformation("New Client inserted!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -99,9 +99,9 @@ public class ClientController implements ControlledScreen {
             try {
                 ClientDAO.updateClient(selectedId, firstNameField.getText(), lastNameField.getText(),
                         passportSeriaField.getText(), passportNumField.getText());
-
+                DialogUtil.showInformation("Selected Client updated!");
             } catch (SQLException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             } finally {
                 updateTable();
                 this.updateSelectedButton.setDisable(true);
@@ -116,7 +116,7 @@ public class ClientController implements ControlledScreen {
         if (DialogUtil.checkAction("Delete client with id = " + selectedId + "?")){
             try {
                 ClientDAO.deleteClient(selectedId);
-
+                DialogUtil.showInformation("Selected Client deleted!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {

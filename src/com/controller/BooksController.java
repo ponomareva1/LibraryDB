@@ -86,7 +86,7 @@ public class BooksController implements ControlledScreen {
 
                 BookDAO.insertBook(titleField.getText(), authorField.getText(),
                         countField.getText(), type.toString());
-
+                DialogUtil.showInformation("New Book inserted!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -109,7 +109,7 @@ public class BooksController implements ControlledScreen {
 
                 BookDAO.updateBook(selectedId, titleField.getText(), authorField.getText(),
                         countField.getText(), type.toString());
-
+                DialogUtil.showInformation("Selected Book updated!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -127,7 +127,7 @@ public class BooksController implements ControlledScreen {
         if (DialogUtil.checkAction("Delete book with id = " + selectedId + "?")){
             try {
                 BookDAO.deleteBook(selectedId);
-
+                DialogUtil.showInformation("Selected Book deleted!");
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
