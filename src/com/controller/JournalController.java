@@ -14,6 +14,8 @@ import java.sql.SQLException;
 
 public class JournalController implements ControlledScreen {
 
+    private ScreensController myController;
+
     public TableView<Journal> tableJournal;
     public TableColumn<Journal, Integer> idColumn;
     public TableColumn<Journal, Integer> bookIdColumn;
@@ -22,16 +24,14 @@ public class JournalController implements ControlledScreen {
     public TableColumn<Journal, String> dateEndColumn;
     public TableColumn<Journal, String> dateRetColumn;
 
+    public TextField numOfBooksField;
+    public TextField currentFineField;
+
     public Button backToMenuButton;
     public Button resetButton;
 
     public ComboBox clientIdBox;
     public ComboBox bookIdBox;
-
-    public TextField numOfBooksField;
-    public TextField currentFineField;
-
-    private ScreensController myController;
 
     @Override
     public void setScreenParent(ScreensController screenPage) {

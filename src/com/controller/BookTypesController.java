@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.model.Book;
 import com.model.BookType;
 import com.model.BookTypeDAO;
 import com.utils.ControlledScreen;
@@ -27,13 +26,13 @@ public class BookTypesController implements ControlledScreen {
     public TableColumn<BookType, Integer> fineColumn;
     public TableColumn<BookType, Integer> dayCountColumn;
 
-    public Button backToMenuButton;
-    public Button updateSelectedButton;
-    public Button deleteSelectedButton;
-
     public TextField nameField;
     public TextField fineField;
     public TextField dayCountField;
+
+    public Button backToMenuButton;
+    public Button updateSelectedButton;
+    public Button deleteSelectedButton;
 
     @Override
     public void setScreenParent(ScreensController screenPage) {

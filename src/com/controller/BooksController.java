@@ -17,21 +17,22 @@ public class BooksController implements ControlledScreen {
 
     private ScreensController myController;
 
-    public Button backToMenuButton;
-    public Button updateSelectedButton;
-    public Button deleteSelectedButton;
-
-    public TextField titleField;
-    public TextField authorField;
-    public TextField countField;
-    public ComboBox typeBox;
-
     public TableView<Book> tableBooks;
     public TableColumn<Book, Integer> idColumn;
     public TableColumn<Book, String>  titleColumn;
     public TableColumn<Book, String>  authorColumn;
     public TableColumn<Book, Integer> countColumn;
     public TableColumn<Book, Integer> typeColumn;
+
+    public TextField titleField;
+    public TextField authorField;
+    public TextField countField;
+
+    public Button backToMenuButton;
+    public Button updateSelectedButton;
+    public Button deleteSelectedButton;
+
+    public ComboBox typeBox;
 
     @Override
     public void setScreenParent(ScreensController screenPage) {

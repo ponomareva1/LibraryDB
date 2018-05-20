@@ -49,7 +49,8 @@ public class Main extends Application {
     }
 
     public static void resizeScreen() {
-        primaryStage.sizeToScene(); primaryStage.centerOnScreen();
+        primaryStage.sizeToScene();
+        primaryStage.centerOnScreen();
     }
 
     public static void main(String[] args) {

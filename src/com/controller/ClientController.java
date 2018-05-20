@@ -16,21 +16,26 @@ public class ClientController implements ControlledScreen {
 
     private ScreensController myController;
 
-    public Button updateSelectedButton;
-    public Button deleteSelectedButton;
-    public Button backToMenuButton;
-
-    public TextField firstNameField;
-    public TextField lastNameField;
-    public TextField passportSeriaField;
-    public TextField passportNumField;
-
     public TableView<Client> tableClients;
     public TableColumn<Client, Integer> idColumn;
     public TableColumn<Client, String> firstNameColumn;
     public TableColumn<Client, String> lastNameColumn;
     public TableColumn<Client, String> passportSeriaColumn;
     public TableColumn<Client, String> passportNumColumn;
+
+    public TextField firstNameField;
+    public TextField lastNameField;
+    public TextField passportSeriaField;
+    public TextField passportNumField;
+
+    public Button updateSelectedButton;
+    public Button deleteSelectedButton;
+    public Button backToMenuButton;
+
+    @Override
+    public void setScreenParent(ScreensController screenPage) {
+        myController = screenPage;
+    }
 
     @FXML
     private void initialize() {
@@ -43,11 +48,6 @@ public class ClientController implements ControlledScreen {
         passportNumColumn.setCellValueFactory(cellData -> cellData.getValue().passportNumProperty());
 
         updateTable();
-    }
-
-    @Override
-    public void setScreenParent(ScreensController screenPage) {
-        myController = screenPage;
     }
 
     private void updateTable() {
