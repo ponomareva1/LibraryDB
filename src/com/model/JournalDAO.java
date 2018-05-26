@@ -13,38 +13,39 @@ import java.util.ArrayList;
 
 public class JournalDAO {
 
-    public static ObservableList<Integer> searchClientIDs () {
-        String selectStmt = "SELECT DISTINCT CLIENT_ID FROM JOURNAL ORDER BY CLIENT_ID";
-        ObservableList<Integer> clientIDs = FXCollections.observableArrayList();
+    public static ObservableList<String> searchClients () {
+        String selectStmt = "SELECT FIRST_NAME, LAST_NAME FROM CLIENTS ORDER BY FIRST_NAME";
+        ObservableList<String> clients = FXCollections.observableArrayList();
 
         try {
             ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
 
             while (rs.next()) {
-                clientIDs.add(rs.getInt("CLIENT_ID"));
+                String name = rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME");
+                clients.add(name);
             }
         } catch (SQLException e) {
             DialogUtil.showError(e.getMessage());
         }
 
-        return clientIDs;
+        return clients;
     }
 
-    public static ObservableList<Integer> searchBookIDs () {
-        String selectStmt = "SELECT DISTINCT ID FROM BOOKS WHERE CNT != 0 ORDER BY ID";
-        ObservableList<Integer> bookIDs = FXCollections.observableArrayList();
+    public static ObservableList<String> searchBooks () {
+        String selectStmt = "SELECT NAME FROM BOOKS WHERE CNT != 0 ORDER BY NAME";
+        ObservableList<String> books = FXCollections.observableArrayList();
 
         try {
             ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
 
             while (rs.next()) {
-                bookIDs.add(rs.getInt("ID"));
+                books.add(rs.getString("NAME"));
             }
         } catch (SQLException e) {
             DialogUtil.showError(e.getMessage());
         }
 
-        return bookIDs;
+        return books;
     }
 
     public static String getNumOfBooks(Integer clientID){
@@ -73,14 +74,14 @@ public class JournalDAO {
 
     public static String getMaxFine(){
         String callStmt = "{? = call MAX_FINE()}";
-        Integer fineAmount = 0;
+        String fineAmount = "";
 
         try {
             fineAmount = DBUtil.dbExecuteFUN0(callStmt);
         } catch (SQLException e) {
             DialogUtil.showError(e.getMessage());
         }
-        return "Current max fine: " + fineAmount.toString();
+        return "Current max fine: " + fineAmount;
     }
 
     public static String get3PopularBooks(){
@@ -100,8 +101,43 @@ public class JournalDAO {
         return msg;
     }
 
+    public static Integer getClientIDByName(String clientName) {
+        String selectStmt = "SELECT ID FROM CLIENTS WHERE FIRST_NAME || ' ' || LAST_NAME = '" +
+                clientName + "'";
+        Integer clientID = 0;
+        try {
+            ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
+
+            rs.next();
+            clientID = rs.getInt("ID");
+        } catch (SQLException e) {
+            DialogUtil.showError(e.getMessage());
+        }
+
+        return clientID;
+    }
+
+    public static Integer getBookIDByName(String bookName) {
+        String selectStmt = "SELECT ID FROM BOOKS WHERE NAME = '" +
+                bookName + "'";
+        Integer bookID = 0;
+        try {
+            ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
+
+            rs.next();
+            bookID = rs.getInt("ID");
+        } catch (SQLException e) {
+            DialogUtil.showError(e.getMessage());
+        }
+
+        return bookID;
+    }
+
     public static ObservableList<Journal> searchJournal () {
-        String selectStmt = "SELECT * FROM JOURNAL";
+        String selectStmt = "SELECT J.ID, B.NAME AS BOOK_ID, C.FIRST_NAME || ' ' || C.LAST_NAME AS CLIENT_ID, \n" +
+                "J.DATE_BEG, J.DATE_END, J.DATE_RET\n" +
+                "FROM JOURNAL J JOIN BOOKS B ON J.BOOK_ID = B.ID JOIN CLIENTS C ON J.CLIENT_ID = C.ID\n" +
+                "ORDER BY J.ID";
 
         try {
             ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
@@ -114,7 +150,10 @@ public class JournalDAO {
     }
 
     public static ObservableList<Journal> searchJournalForClient(Integer clientID) {
-        String selectStmt = "SELECT * FROM JOURNAL WHERE CLIENT_ID = " + clientID.toString();
+        String selectStmt = "SELECT J.ID, B.NAME AS BOOK_ID, C.FIRST_NAME || ' ' || C.LAST_NAME AS CLIENT_ID, \n" +
+                "J.DATE_BEG, J.DATE_END, J.DATE_RET\n" +
+                "FROM JOURNAL J JOIN BOOKS B ON J.BOOK_ID = B.ID JOIN CLIENTS C ON J.CLIENT_ID = C.ID\n" +
+                "WHERE CLIENT_ID = " + clientID.toString();
 
         try {
             ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
@@ -132,8 +171,8 @@ public class JournalDAO {
         while (rs.next()) {
             Journal journal = new Journal();
             journal.setId(rs.getInt("ID"));
-            journal.setBookId(rs.getInt("BOOK_ID"));
-            journal.setClientId(rs.getInt("CLIENT_ID"));
+            journal.setBookId(rs.getString("BOOK_ID"));
+            journal.setClientId(rs.getString("CLIENT_ID"));
             journal.setDateBeg(convertTimestampToString(rs.getTimestamp("DATE_BEG")));
             journal.setDateEnd(convertTimestampToString(rs.getTimestamp("DATE_END")));
 
@@ -150,7 +189,7 @@ public class JournalDAO {
     }
 
     private static String convertTimestampToString(Timestamp timestamp){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return dateFormat.format(timestamp);
     }
 

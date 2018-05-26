@@ -85,14 +85,14 @@ public class DBUtil {
     }
 
     // function with 0 parameters
-    public static Integer dbExecuteFUN0(String sqlStmt) throws SQLException {
+    public static String dbExecuteFUN0(String sqlStmt) throws SQLException {
         CallableStatement cs = null;
         try {
             dbConnect();
             cs = connection.prepareCall(sqlStmt);
-            cs.registerOutParameter(1,Types.NUMERIC);
+            cs.registerOutParameter(1,Types.VARCHAR);
             cs.executeUpdate();
-            return cs.getInt(1);
+            return cs.getString(1);
         } catch (SQLException e) {
             System.out.println("Problem occurred at dbExecuteFUN0 operation : " + e);
             throw e;

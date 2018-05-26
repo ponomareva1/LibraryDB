@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -12,11 +13,11 @@
             </columnResizePolicy>
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="40.0" resizable="false" text="ID" />
-                <TableColumn fx:id="bookIdColumn" resizable="false" text="Book ID" />
-                <TableColumn fx:id="clientIdColumn" resizable="false" text="Client ID" />
-                <TableColumn fx:id="dateBegColumn" prefWidth="175.0" resizable="false" text="Date Begin" />
-                <TableColumn fx:id="dateEndColumn" prefWidth="175.0" resizable="false" text="Date End" />
-                <TableColumn fx:id="dateRetColumn" prefWidth="175.0" resizable="false" text="Date Return" />
+                <TableColumn fx:id="bookIdColumn" prefWidth="179.0" resizable="false" text="Book" />
+                <TableColumn fx:id="clientIdColumn" prefWidth="173.0" resizable="false" text="Client" />
+                <TableColumn fx:id="dateBegColumn" prefWidth="110.0" resizable="false" text="Date Begin" />
+                <TableColumn fx:id="dateEndColumn" prefWidth="103.0" resizable="false" text="Date End" />
+                <TableColumn fx:id="dateRetColumn" prefWidth="108.0" resizable="false" text="Date Return" />
             </columns>
         </TableView>
         <GridPane alignment="TOP_CENTER" prefHeight="140.0" prefWidth="730.0" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -98,9 +99,9 @@
             </Button>
             </children>
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="117.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="148.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="151.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="78.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="199.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="133.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="168.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="154.0" />
             </columnConstraints>

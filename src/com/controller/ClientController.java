@@ -57,8 +57,8 @@ public class ClientController implements ControlledScreen {
     }
 
     public void userClickedOnTable() {
-        if (updateSelectedButton.isDisabled()) this.updateSelectedButton.setDisable(false);
-        if (deleteSelectedButton.isDisabled()) this.deleteSelectedButton.setDisable(false);
+        if (updateSelectedButton.isDisabled()) updateSelectedButton.setDisable(false);
+        if (deleteSelectedButton.isDisabled()) deleteSelectedButton.setDisable(false);
 
         setSelectedClient();
     }
@@ -165,6 +165,8 @@ public class ClientController implements ControlledScreen {
         lastNameField.clear();
         passportSeriaField.clear();
         passportNumField.clear();
+        if (!updateSelectedButton.isDisabled()) updateSelectedButton.setDisable(true);
+        if (!deleteSelectedButton.isDisabled()) deleteSelectedButton.setDisable(true);
         updateTable();
     }
 }

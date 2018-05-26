@@ -18,8 +18,8 @@ public class JournalController implements ControlledScreen {
 
     public TableView<Journal> tableJournal;
     public TableColumn<Journal, Integer> idColumn;
-    public TableColumn<Journal, Integer> bookIdColumn;
-    public TableColumn<Journal, Integer> clientIdColumn;
+    public TableColumn<Journal, String> bookIdColumn;
+    public TableColumn<Journal, String > clientIdColumn;
     public TableColumn<Journal, String> dateBegColumn;
     public TableColumn<Journal, String> dateEndColumn;
     public TableColumn<Journal, String> dateRetColumn;
@@ -44,8 +44,8 @@ public class JournalController implements ControlledScreen {
         resetButton.setOnAction(e -> updateTable());
 
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        bookIdColumn.setCellValueFactory(cellData -> cellData.getValue().bookIdProperty().asObject());
-        clientIdColumn.setCellValueFactory(cellData -> cellData.getValue().clientIdProperty().asObject());
+        bookIdColumn.setCellValueFactory(cellData -> cellData.getValue().bookIdProperty());
+        clientIdColumn.setCellValueFactory(cellData -> cellData.getValue().clientIdProperty());
         dateBegColumn.setCellValueFactory(cellData -> cellData.getValue().dateBegProperty());
         dateEndColumn.setCellValueFactory(cellData -> cellData.getValue().dateEndProperty());
         dateRetColumn.setCellValueFactory(cellData -> cellData.getValue().dateRetProperty());
@@ -59,9 +59,9 @@ public class JournalController implements ControlledScreen {
         tableJournal.setItems(data);
         tableJournal.getSortOrder().add(idColumn);
 
-        clientIdBox.setItems(JournalDAO.searchClientIDs());
+        clientIdBox.setItems(JournalDAO.searchClients());
         clientIdBox.getSelectionModel().clearSelection();
-        bookIdBox.setItems(JournalDAO.searchBookIDs());
+        bookIdBox.setItems(JournalDAO.searchBooks());
         bookIdBox.getSelectionModel().clearSelection();
 
         numOfBooksField.clear();
@@ -73,7 +73,7 @@ public class JournalController implements ControlledScreen {
             DialogUtil.showWarning("Select client ID");
             return;
         }
-        Integer clientID = Integer.parseInt(clientIdBox.getSelectionModel().getSelectedItem().toString());
+        Integer clientID = JournalDAO.getClientIDByName(clientIdBox.getSelectionModel().getSelectedItem().toString());
         tableJournal.getItems().clear();
         ObservableList<Journal> data = JournalDAO.searchJournalForClient(clientID);
         tableJournal.setItems(data);
@@ -88,8 +88,8 @@ public class JournalController implements ControlledScreen {
             DialogUtil.showWarning("Select client ID and book ID");
             return;
         }
-        Integer clientID = Integer.parseInt(clientIdBox.getSelectionModel().getSelectedItem().toString());
-        Integer bookId = Integer.parseInt(bookIdBox.getSelectionModel().getSelectedItem().toString());
+        Integer clientID = JournalDAO.getClientIDByName(clientIdBox.getSelectionModel().getSelectedItem().toString());
+        Integer bookId = JournalDAO.getBookIDByName(bookIdBox.getSelectionModel().getSelectedItem().toString());
 
         if (DialogUtil.checkAction("Issue book with ID = " + bookId.toString() +
                 " to client with ID = " + clientID.toString() + "?")){
@@ -110,8 +110,8 @@ public class JournalController implements ControlledScreen {
             return;
         }
         Journal selectedRow = tableJournal.getSelectionModel().getSelectedItem();
-        Integer clientID = selectedRow.getClientId();
-        Integer bookId = selectedRow.getBookId();
+        Integer clientID = JournalDAO.getClientIDByName(selectedRow.getClientId());
+        Integer bookId = JournalDAO.getBookIDByName(selectedRow.getBookId());
 
         if (selectedRow.getDateRet() != "NULL"){
             DialogUtil.showWarning("Date of Return must be NULL");

@@ -60,8 +60,8 @@ public class BooksController implements ControlledScreen {
     }
 
     public void userClickedOnTable() {
-        if (updateSelectedButton.isDisabled()) this.updateSelectedButton.setDisable(false);
-        if (deleteSelectedButton.isDisabled()) this.deleteSelectedButton.setDisable(false);
+        if (updateSelectedButton.isDisabled()) updateSelectedButton.setDisable(false);
+        if (deleteSelectedButton.isDisabled()) deleteSelectedButton.setDisable(false);
 
         setSelectedBook();
     }
@@ -163,6 +163,8 @@ public class BooksController implements ControlledScreen {
         authorField.clear();
         countField.clear();
         typeBox.getSelectionModel().clearSelection();
+        if (!updateSelectedButton.isDisabled()) updateSelectedButton.setDisable(true);
+        if (!deleteSelectedButton.isDisabled()) deleteSelectedButton.setDisable(true);
         update();
     }
 }
